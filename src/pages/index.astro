@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HomeProjectStack from '../components/HomeProjectStack.astro';
+---
+<Layout title="PageFix — Brand, digital product and business systems" description="PageFix helps growing teams turn business challenges into stronger brands, useful digital products and simpler workflows. Strategy, design and development from India, for teams everywhere.">
+  <section class="hero-home">
+    <div class="hero-grid"></div>
+    <div class="wrap hero-home-layout">
+      <div class="hero-home-copy">
+        <span class="eyebrow hero-label">Independent digital studio / India + worldwide</span>
+        <h1>MAKE THE<br /><span>NEXT MOVE.</span></h1>
+        <p>We turn business challenges into clear brands, useful digital products and systems that make everyday work simpler.</p>
+        <div class="hero-actions"><a class="button primary" href="/start-a-project">Talk through a project <span aria-hidden="true">↗</span></a><a class="text-link" href="#selected-work">Explore selected work <span aria-hidden="true">↓</span></a></div>
+      </div>
+      <div class="hero-project-collage" aria-label="Selected PageFix project previews">
+        <a class="hero-collage-card hero-collage-main" href="/work/autobon" aria-label="Explore Autobon digital platform case study"><img src="/images/autobon.ca/complete%20autobon.webp" alt="" fetchpriority="high" /><span><b>01</b> DIGITAL PLATFORM <i>↗</i></span></a>
+        <a class="hero-collage-card hero-collage-small" href="/work/redesigns-500" aria-label="Explore Redesigns 500 social design project"><img src="/images/REDESIGNS%20_%20500/post1.png" alt="" /><span><b>09</b> REDESIGNS 500</span></a>
+        <div class="hero-collage-stamp"><span>STRATEGY</span><b>+</b><span>MADE USEFUL</span></div>
+      </div>
+    </div>
+    <div class="hero-bottom wrap"><span>BRAND · DIGITAL PRODUCT · AUTOMATION</span><span>INDEPENDENT BY DESIGN / AVAILABLE WORLDWIDE</span></div>
+  </section>
+
+  <section class="statement wrap" id="selected-work">
+    <div><span class="eyebrow">The idea</span><h2>Useful work starts with <span>the real problem.</span></h2></div>
+    <p>We connect the business goal to the people using the result, then shape the brand, product or workflow around what needs to work better.</p>
+  </section>
+
+  <HomeProjectStack />
+
+  <section class="section services-section">
+    <div class="section-head"><div><span class="eyebrow">Where we help</span><h2>From first thought<br />to <span>working system.</span></h2></div><p class="section-intro">Bring us in to clarify the opportunity, design the experience and build the pieces your team needs to move forward.</p></div>
+    <div class="service-grid">
+      <article><span>01 / BRAND STRATEGY</span><h3>Build a brand with purpose, clarity and consistency.</h3><p>Positioning, identity, messaging, guidelines and market research.</p></article>
+      <article><span>02 / DIGITAL SOLUTIONS</span><h3>Design digital experiences that engage and convert.</h3><p>UI / UX, websites, landing pages, e-commerce and product design.</p></article>
+      <article><span>03 / AI & AUTOMATION</span><h3>Remove repetitive work from the business.</h3><p>Workflow automation, AI assistants, CRM integration and lead management.</p></article>
+      <article class="service-note"><span>04 / APPROACH</span><h3>Strategy first. Useful output second.</h3><p>We keep the loop tight: understand, design, build, test and improve.</p></article>
+    </div>
+  </section>
+
+  <section class="manifesto wrap">
+    <span class="eyebrow">Why PageFix</span>
+    <div class="manifesto-line"><span>MESSY</span><i></i><strong>→</strong><span>USEFUL</span></div>
+    <p>We simplify complicated ideas into things people can actually understand, navigate and use.</p>
+  </section>
+
+  <section class="home-cta wrap">
+    <span class="eyebrow">Have a problem worth solving?</span>
+    <h2>LET'S BUILD<br /><span>SOMETHING MEANINGFUL.</span></h2>
+    <a class="button primary" href="/start-a-project">Start a project ↗</a>
+  </section>
+</Layout>

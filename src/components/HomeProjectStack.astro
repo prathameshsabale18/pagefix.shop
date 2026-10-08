@@ -1,0 +1,105 @@
+---
+import { projects } from '../data/projects';
+const carouselProjects = [...projects, ...projects, ...projects];
+---
+<section class="home-projects" data-project-stack>
+  <div class="home-project-intro wrap">
+    <div><span class="eyebrow">Selected work / 01—{String(projects.length).padStart(2, '0')}</span><h2>Proof<br /><span>in work.</span></h2></div>
+    <p>Selected projects, shown through the work itself.</p>
+  </div>
+  <div class="project-stack-stage" data-project-carousel data-project-count={projects.length} aria-label="Selected projects" aria-roledescription="carousel">
+    <div class="project-stack-track" data-carousel-track>
+      {carouselProjects.map((project, index) => (
+        <article class:list={["stack-card", `accent-${project.accent}`]} data-carousel-card aria-roledescription="slide" aria-label={`${(index % projects.length) + 1} of ${projects.length}: ${project.title}`}>
+          <a class="project-image-card" href={`/work/${project.slug}`} aria-label={`View ${project.title} case study`}>
+            <img src={project.slug === 'autobon' ? '/images/autobon.ca/complete%20autobon.webp' : project.image} alt={`${project.title} ${project.category.toLowerCase()} project preview`} loading="eager" />
+            <span class="project-image-shade" aria-hidden="true"></span>
+            <span class="project-image-heading">
+              <span class="eyebrow">{project.number} / {project.category}</span>
+              <strong>{project.title}</strong>
+              <span class="project-image-link">VIEW PROJECT <span aria-hidden="true">↗</span></span>
+            </span>
+          </a>
+        </article>
+      ))}
+    </div>
+    <div class="project-carousel-controls" aria-label="Project slides">
+      <button type="button" data-carousel-prev aria-label="Previous project">←</button>
+      <button type="button" data-carousel-next aria-label="Next project">→</button>
+    </div>
+  </div>
+</section>
+<script>
+  import gsap from 'gsap';
+  const initializeCarousel = () => {
+    const root = document.querySelector('[data-project-carousel]');
+    if (!root || root.hasAttribute('data-carousel-ready')) return;
+    root.setAttribute('data-carousel-ready', '');
+    const cards = Array.from(root.querySelectorAll('[data-carousel-card]')) as HTMLElement[];
+    const track = root.querySelector('[data-carousel-track]');
+    const previous = root.querySelector('[data-carousel-prev]');
+    const next = root.querySelector('[data-carousel-next]');
+    if (!track || !previous || !next || cards.length < 2) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const projectCount = Number(root.getAttribute('data-project-count')) || Math.floor(cards.length / 3);
+    let active = projectCount;
+    let timer: number | undefined;
+    const placeCards = (animate = true) => {
+      cards.forEach((card, item) => {
+        const offset = item - active;
+        const distance = root.clientWidth < 640 ? root.clientWidth * .62 : Math.min(root.clientWidth * .34, 470);
+        const isActive = offset === 0;
+        const distanceFromCenter = Math.abs(offset);
+        gsap.to(card, {
+          xPercent: -50,
+          yPercent: -50,
+          x: offset * distance,
+          y: distanceFromCenter === 0 ? 0 : 14,
+          scale: distanceFromCenter === 0 ? 1 : distanceFromCenter === 1 ? .8 : .62,
+          opacity: distanceFromCenter === 0 ? 1 : distanceFromCenter === 1 ? .72 : distanceFromCenter === 2 ? .3 : 0,
+          zIndex: 5 - distanceFromCenter,
+          duration: animate && !reduceMotion ? 1.05 : 0,
+          ease: 'power3.inOut',
+          overwrite: true
+        });
+        const hidden = !isActive;
+        card.setAttribute('aria-hidden', String(hidden));
+        card.inert = hidden;
+      });
+    };
+    const show = (direction: number, animate = true) => {
+      active += direction;
+      placeCards(animate);
+      if (animate && !reduceMotion) {
+        gsap.delayedCall(1.08, () => {
+          let normalized = false;
+          if (active >= projectCount * 2) { active -= projectCount; normalized = true; }
+          if (active <= projectCount - 1) { active += projectCount; normalized = true; }
+          if (normalized) placeCards(false);
+        });
+      }
+    };
+    const schedule = () => {
+      window.clearTimeout(timer);
+      if (!reduceMotion) timer = window.setTimeout(() => { show(1); schedule(); }, 4500);
+    };
+    previous.addEventListener('click', () => { show(-1); schedule(); });
+    next.addEventListener('click', () => { show(1); schedule(); });
+    window.addEventListener('resize', () => placeCards(false));
+    if (reduceMotion) {
+      cards.forEach((card, index) => {
+        const hidden = index < projectCount || index >= projectCount * 2;
+        card.hidden = hidden;
+        card.setAttribute('aria-hidden', String(hidden));
+        card.inert = hidden;
+      });
+      root.classList.add('carousel-reduced-motion');
+    } else {
+      placeCards(false);
+    }
+    schedule();
+    document.addEventListener('astro:before-swap', () => window.clearTimeout(timer), { once: true });
+  };
+  initializeCarousel();
+  document.addEventListener('astro:page-load', initializeCarousel);
+</script>

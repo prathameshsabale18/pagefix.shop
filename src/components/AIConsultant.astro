@@ -1,0 +1,54 @@
+<div class="ai-consultant" data-ai>
+  <button class="ai-trigger" type="button" aria-expanded="false" aria-controls="ai-panel">
+    <span class="ai-pulse"></span>
+    <span>Find your starting point</span>
+    <span class="ai-arrow">↗</span>
+  </button>
+  <aside class="ai-panel" id="ai-panel" aria-hidden="true">
+    <div class="ai-panel-head">
+      <div><span class="eyebrow">PROJECT FINDER</span><h3>What are you trying to improve?</h3></div>
+      <button class="ai-close" type="button" aria-label="Close consultant">×</button>
+    </div>
+    <div class="ai-messages" data-ai-messages>
+      <div class="ai-message bot">Choose a suggestion or describe what needs to work better. I’ll point you to a useful place to start.</div>
+    </div>
+    <form class="ai-form" data-ai-form>
+      <input data-ai-input aria-label="Describe your business problem" placeholder="e.g. our website gets traffic but no enquiries" autocomplete="off" />
+      <button type="submit" aria-label="Send">→</button>
+    </form>
+    <div class="ai-suggestions" data-ai-suggestions>
+      <button type="button">New website</button><button type="button">Improve UX</button><button type="button">Automate work</button>
+    </div>
+  </aside>
+</div>
+<script is:inline>
+  const ai = document.querySelector('[data-ai]');
+  if (ai) {
+    const trigger = ai.querySelector('.ai-trigger');
+    const panel = ai.querySelector('.ai-panel');
+    const close = ai.querySelector('.ai-close');
+    const form = ai.querySelector('[data-ai-form]');
+    const input = ai.querySelector('[data-ai-input]');
+    const messages = ai.querySelector('[data-ai-messages]');
+    const suggestions = ai.querySelector('[data-ai-suggestions]');
+    const reply = (text) => {
+      const t = text.toLowerCase();
+      if (/(website|landing|site|web)/.test(t)) return 'Start with Digital Solutions: UX, responsive website design and development. If conversion is the issue, we can also shape the enquiry flow.';
+      if (/(ux|ui|interface|flow|product|app)/.test(t)) return 'Product / UX is the right starting point: research, user flows, interface design and a design system before engineering.';
+      if (/(ai|automation|crm|lead|repetitive|manual|workflow)/.test(t)) return 'AI & Automation fits this: workflow automation, AI assistants, CRM integration, lead management and business automation.';
+      if (/(brand|logo|identity|position|messaging|visual)/.test(t)) return 'Brand Strategy is the starting point: positioning, identity, messaging, guidelines and market research.';
+      return 'This sounds like a strategy + execution problem. Start with a project conversation and we’ll map the business challenge before choosing the build.';
+    };
+    const open = () => { panel.classList.add('open'); panel.setAttribute('aria-hidden','false'); trigger.setAttribute('aria-expanded','true'); input?.focus(); };
+    const shut = () => { panel.classList.remove('open'); panel.setAttribute('aria-hidden','true'); trigger.setAttribute('aria-expanded','false'); };
+    trigger?.addEventListener('click', open); close?.addEventListener('click', shut);
+    const send = (value) => {
+      if (!value?.trim()) return;
+      const user = document.createElement('div'); user.className='ai-message user'; user.textContent=value.trim(); messages.appendChild(user);
+      const bot = document.createElement('div'); bot.className='ai-message bot'; bot.textContent=reply(value); messages.appendChild(bot); messages.scrollTop=messages.scrollHeight;
+      input.value='';
+    };
+    form?.addEventListener('submit', e => { e.preventDefault(); send(input.value); });
+    suggestions?.querySelectorAll('button').forEach(b => b.addEventListener('click', () => send(b.textContent)));
+  }
+</script>

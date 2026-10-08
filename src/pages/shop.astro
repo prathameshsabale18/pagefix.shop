@@ -1,0 +1,117 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const offers = [
+  {
+    number: '01', kind: 'READY-TO-USE TEMPLATE', title: 'The Launch Page Kit',
+    description: 'A polished, conversion-minded landing page starter for a new service, product or campaign. Includes desktop and mobile layouts, reusable sections and a handoff guide.',
+    image: '/images/positivus%20landing%20rd%20(1)/post2.png', alt: 'Landing page design concept',
+    price: '₹1,499', foreign: 'US$19', delivery: 'Instant access', format: 'Figma file · Personal and commercial use',
+    featured: true
+  },
+  {
+    number: '02', kind: 'DESIGN SPRINT', title: 'Landing Page Sprint',
+    description: 'A focused, custom-designed landing page for one offer. Includes a short discovery call, responsive Figma design and one refinement round.',
+    image: '/images/autobon.ca/autobon salespage.webp', alt: 'Responsive sales page design',
+    price: '₹24,999', foreign: 'US$299', delivery: '5–7 business days', format: 'One page · Figma handoff',
+    featured: false
+  },
+  {
+    number: '03', kind: 'BRAND TEMPLATE', title: 'The Brand Starter Kit',
+    description: 'A practical identity toolkit for a small business: logo lockup, colour and type system, social post templates and a concise usage sheet.',
+    image: '/images/gajasai/01.webp', alt: 'Brand identity and design system',
+    price: '₹6,999', foreign: 'US$89', delivery: 'Instant access', format: 'Editable design files · Commercial use',
+    featured: false
+  },
+  {
+    number: '04', kind: 'WEBSITE SERVICE', title: 'Website in a Week',
+    description: 'A clean, responsive five-section website for an established business. Includes content structure, visual design, build, launch support and two feedback rounds.',
+    image: '/images/canvasbill/01.webp', alt: 'Business software web interface',
+    price: '₹49,999', foreign: 'US$599', delivery: '7–10 business days', format: 'Up to 5 sections · Hosting billed separately',
+    featured: false
+  }
+];
+---
+
+<Layout title="Templates & digital services — PageFix" description="Shop useful design templates and focused digital services from PageFix. Clear inclusions, delivery times and pricing for India and worldwide.">
+  <div class="shop-page">
+    <section class="shop-hero wrap">
+      <div class="shop-hero-copy">
+        <span class="eyebrow">PAGEFIX SHOP · TEMPLATES + SERVICES</span>
+        <h1>GOOD WORK.<br /><span>READY WHEN YOU ARE.</span></h1>
+        <p>Useful starting points for your next launch. Pick up a ready-made template or book a focused design service, with the scope and delivery time set out up front.</p>
+        <a class="button primary" href="#offers">Explore the shop <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="shop-hero-art" aria-label="Selected PageFix design work">
+        <figure class="shop-art-main"><img src="/images/autobon.ca/autobon salespage.webp" alt="Autobon vehicle rental sales page design" fetchpriority="high" /><figcaption>01 / DIGITAL DESIGN</figcaption></figure>
+        <figure class="shop-art-small"><img src="/images/gajasai/01.webp" alt="Gajsai Ventures brand identity design" loading="lazy" /><figcaption>02 / BRAND SYSTEM</figcaption></figure>
+        <span class="shop-stamp" aria-hidden="true">MADE BY<br /><strong>PAGEFIX</strong></span>
+      </div>
+    </section>
+
+    <section class="shop-trust wrap" aria-label="Shop details">
+      <div><span>01</span><strong>Clear scope</strong><small>Know what is included before you buy.</small></div>
+      <div><span>02</span><strong>Made to be useful</strong><small>Practical design, ready to put to work.</small></div>
+      <div><span>03</span><strong>India + worldwide</strong><small>Local and international payment options.</small></div>
+    </section>
+
+    <section class="shop-offers wrap" id="offers">
+      <div class="shop-section-head"><div><span class="eyebrow">THE CURRENT DROP</span><h2>Find your <span>next step.</span></h2></div><p>Sample offers to make the format clear. Custom work starts with a quick scope check, and templates include their usage terms.</p></div>
+      <div class="shop-grid">
+        {offers.map((offer) => (
+          <article class:list={["shop-card", { featured: offer.featured }]}>
+            <a class="shop-card-image" href={`/start-a-project?offer=${encodeURIComponent(offer.title)}`} aria-label={`Enquire about ${offer.title}`}>
+              <img src={offer.image} alt={offer.alt} loading="lazy" />
+              <span class="shop-card-number">{offer.number} / 04</span>
+              {offer.featured && <span class="shop-card-badge">BEST START</span>}
+            </a>
+            <div class="shop-card-copy">
+              <span class="eyebrow">{offer.kind}</span>
+              <h3>{offer.title}</h3>
+              <p>{offer.description}</p>
+              <ul class="shop-specs">
+                <li><span>Delivery</span><strong>{offer.delivery}</strong></li>
+                <li><span>Includes</span><strong>{offer.format}</strong></li>
+              </ul>
+              <div class="shop-price-row"><div><strong>{offer.price}</strong><span>{offer.foreign} · international</span></div><a href={`/start-a-project?offer=${encodeURIComponent(offer.title)}`} aria-label={`Enquire about ${offer.title}`}>Enquire <span aria-hidden="true">↗</span></a></div>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="shop-price-note">Prices are sample starting prices. Final quote, taxes and currency are confirmed before payment. Templates are delivered digitally; service timelines begin after the brief and required content are approved.</p>
+    </section>
+
+    <section class="shop-process">
+      <div class="wrap shop-process-inner">
+        <div><span class="eyebrow">SIMPLE, CLEAR, HUMAN</span><h2>From pick<br />to <span>delivered.</span></h2><p>We confirm the exact scope and send your secure payment instructions before work or delivery begins.</p></div>
+        <ol class="shop-steps">
+          <li><span>01</span><div><strong>Choose an offer</strong><p>Send an enquiry with the product or service you have in mind.</p></div></li>
+          <li><span>02</span><div><strong>Confirm the details</strong><p>We reply with availability, final price, timeline and the right payment route.</p></div></li>
+          <li><span>03</span><div><strong>Pay securely</strong><p>Use the invoice or secure payment link we send. No card details are collected on this site.</p></div></li>
+          <li><span>04</span><div><strong>Get your files or service</strong><p>Templates arrive digitally. Services move through the agreed design and handoff milestones.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="shop-payment wrap">
+      <div><span class="eyebrow">PAYMENT, WHEREVER YOU ARE</span><h2>Local checkout.<br /><span>Global clients.</span></h2><p>Payment is arranged after we confirm your order. Indian clients can pay in INR through UPI, bank transfer or card when available on the invoice. International clients receive an invoice in an agreed currency with card or bank transfer options, subject to availability.</p></div>
+      <div class="payment-options">
+        <article><span class="payment-symbol">IN</span><div><h3>India</h3><p>INR invoice · UPI · bank transfer · card (where enabled)</p></div></article>
+        <article><span class="payment-symbol">↗</span><div><h3>International</h3><p>Invoice in an agreed currency · card or international bank transfer (where enabled)</p></div></article>
+        <small>Payment methods are confirmed on your invoice. Checkout links are shared directly after your order is confirmed.</small>
+      </div>
+    </section>
+
+    <section class="shop-faq wrap">
+      <div><span class="eyebrow">GOOD TO KNOW</span><h2>A few <span>answers.</span></h2></div>
+      <div class="shop-faq-list">
+        <details><summary>Are these final prices?</summary><p>They are sample starting prices for this storefront concept. We confirm the exact price, scope, tax treatment and currency before you pay.</p></details>
+        <details><summary>When does delivery time begin?</summary><p>For services, the delivery window starts once the brief, required content and first payment milestone are confirmed. We’ll flag any change before it affects the date.</p></details>
+        <details><summary>What do template licences cover?</summary><p>Each template includes personal and commercial use for one business or brand. Resale, redistribution and repackaging are not included; ask us if you need a broader licence.</p></details>
+        <details><summary>Can I request something custom?</summary><p>Yes. Tell us what you need and we’ll suggest a focused scope or a custom project route.</p></details>
+      </div>
+    </section>
+
+    <section class="shop-end wrap"><span class="eyebrow">NEED A DIFFERENT FIT?</span><h2>Let’s make the right<br /><span>thing for you.</span></h2><a class="button primary" href="/start-a-project">Talk to PageFix <span aria-hidden="true">↗</span></a></section>
+  </div>
+</Layout>

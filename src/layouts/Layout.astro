@@ -1,0 +1,95 @@
+---
+import '../styles/global.css';
+import '../styles/refresh.css';
+import AIConsultant from '../components/AIConsultant.astro';
+import { ClientRouter } from 'astro:transitions';
+const { title = 'PageFix — Brand, digital product and business systems', description = 'PageFix helps growing teams turn business challenges into stronger brands, useful digital products and simpler workflows.' } = Astro.props;
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/work', label: 'Work' },
+  { href: '/shop', label: 'Shop' },
+  { href: '/how-its-done', label: "How it's done" },
+  { href: '/start-a-project', label: 'Start a project' }
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#15171b" />
+    <meta property="og:site_name" content="PageFix" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="site-header" id="top">
+      <a class="brand" href="/" aria-label="PageFix home"><img src="/images/logo.svg" alt="" /><span class="brand-domain">pagefix.shop</span></a>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        {nav.map((item) => <a class:list={[{ active: path === item.href || path.startsWith(item.href + '/') }, 'nav-link']} href={item.href}>{item.label}</a>)}
+      </nav>
+      <a class="header-cta" href="/start-a-project">Start a project <span>↗</span></a>
+      <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false">Menu <span>↗</span></button>
+    </header>
+    <div class="mobile-panel" data-menu>
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </div>
+    <main><slot /></main>
+    <AIConsultant />
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div class="footer-intro">
+          <a class="footer-wordmark" href="/" aria-label="PageFix home">PAGEFIX<span>®</span></a>
+          <span class="eyebrow">INDEPENDENT DIGITAL STUDIO / INDIA + WORLDWIDE</span>
+          <h2>Clear thinking.<br /><em>Useful work.</em></h2>
+          <a class="footer-project-link" href="/start-a-project">Have a project in mind? <span aria-hidden="true">↗</span></a>
+        </div>
+        <nav class="footer-nav-grid" aria-label="Footer navigation">
+          <div class="footer-link-group">
+            <h3>Explore</h3>
+            <a href="/work">Selected work</a>
+            <a href="/shop">Templates &amp; services</a>
+            <a href="/how-its-done">How it’s done</a>
+            <a href="/start-a-project">Start a project</a>
+          </div>
+          <div class="footer-link-group">
+            <h3>What we do</h3>
+            <span>Strategy &amp; branding</span>
+            <span>Digital products</span>
+            <span>Websites &amp; systems</span>
+            <span>AI &amp; automation</span>
+          </div>
+          <div class="footer-link-group footer-contact">
+            <h3>Get in touch</h3>
+            <a href="mailto:pagefixed@gmail.com">pagefixed@gmail.com <span aria-hidden="true">↗</span></a>
+            <span>India · Working worldwide</span>
+          </div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© {new Date().getFullYear()} PageFix. All rights reserved.</span>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </footer>
+    <script is:inline>
+      const button = document.querySelector('.menu-button');
+      const panel = document.querySelector('[data-menu]');
+      button?.addEventListener('click', () => {
+        const open = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!open)); panel?.classList.toggle('open', !open);
+      });
+      panel?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { button?.setAttribute('aria-expanded','false'); panel?.classList.remove('open'); }));
+    </script>
+  </body>
+</html>

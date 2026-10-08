@@ -1,0 +1,16 @@
+{
+  "name": "pagefix-growth-partner",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/vercel": "^8.2.0",
+    "astro": "^5.14.1",
+    "gsap": "^3.13.0"
+  }
+}

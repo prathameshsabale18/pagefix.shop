@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { projects } from '../data/projects';
+---
+<Layout title="Selected work — PageFix" description="Explore PageFix work across digital platforms, business software and brand identity. See how strategy, design and development come together in real project scopes.">
+  <section class="work-hero wrap">
+    <span class="eyebrow">Selected work</span>
+    <div class="work-hero-grid"><h1>PROOF<br /><span>IN WORK.</span></h1><p>Projects that show how PageFix combines strategy, design, technology and automation.</p></div>
+  </section>
+  <section class="work-page-section wrap">
+    <div class="work-list">
+      {projects.map((project) => (
+        <article class="work-item">
+          <a class="work-art" href={`/work/${project.slug}`} aria-label={`View ${project.title} project`}><img src={project.image} alt={`${project.title} ${project.category.toLowerCase()} preview`} loading="lazy" /></a>
+          <div class="work-meta"><div><span class="eyebrow">{project.number} / {project.category}</span><h2>{project.title}</h2><p>{project.description}</p><div class="work-services">{project.services.map(s => <span>{s}</span>)}</div><a class="work-link" href={`/work/${project.slug}`}>VIEW PROJECT ↗</a></div></div>
+        </article>
+      ))}
+      <article class="work-next">
+        <span class="eyebrow">Have a project in mind?</span>
+        <h2>Let’s make the next move clear.</h2>
+        <a class="button primary" href="/start-a-project">Tell us what you’re working on <span aria-hidden="true">↗</span></a>
+      </article>
+    </div>
+  </section>
+</Layout>
